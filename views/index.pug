@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title= title ? title : "Node.js Avec Express" 
+        
+        style
+            include ../public/stylesheets/style.css
+            include ../node_modules/bootstrap/dist/css/bootstrap.css
+      
+    body
+        script(src="/dist/jquery.min.js")
+        script(src="/js/bootstrap.bundle.min.js")
+    
+        include partials/_navbar
+
+        h1 Home Page
+
+        ul
+            li Puce 1
+            li Puce 2
+            li Puce 3
+            li Puce 4
+            li Puce 5
+            li Puce 6
+        table
+            tr
+                th Name
+                th Country
+                th Picture
+            tr
+                td=name[0]
+                td France
+                td img(src="/images/pogba.jpg", alt="pogba")
+            tr
+                td=name[1]
+                td France
+                td img(src="/images/martial.jpg", alt="Matial")

@@ -1,17 +1,19 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+let createError = require('http-errors');
+let express = require('express');
+let path = require('path');
+let cookieParser = require('cookie-parser');
+let logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+// On importe les différents routeurs
+let indexRouter = require('./routes/index');
+let usersRouter = require('./routes/users');
+let productCreationRouter = require('./routes/product-creation');
 
-var app = express();
+let app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -19,8 +21,34 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/dist', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
+app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')));
+app.use('/images', express.static(path.join(__dirname, '/public/images')));
+
+// Système de routage
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/produit', productCreationRouter);
+
+// Création d'une page de contact
+app.get('/contact', (req, res) => {
+  res.send('<h1>Page contact</h1>');
+});
+
+// Route permettant de rendre du JSON
+app.get('/api/products', (req, res) => {
+
+  const monObjet = { "name" : "hamac" };
+  const monObjetString = JSON.stringify(monObjet); 
+  
+  // res.send(monObjetString);
+  res.json(monObjet);
+
+});
+
+app.get(/^[/](ba)+r+$/, (req, res) => {
+  res.send('URL catched !');
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
